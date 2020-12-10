@@ -85,39 +85,25 @@ export default class ReceiveSmss {
     }
     async listen(number, cb = () => {}, intervalDuration = 5000) {
         return new Promise(async (resolve, reject) => {
-            const inboxes = await this.inbox(number)
-            const usedInterval = await new Promise((usingInterval) => {
-                cb(inboxes, {
-                    resolve(data) {
-                        usingInterval(false)
-                        resolve(data)
-                    },
-                    reject(error) {
-                        usingInterval(false)
-                        reject(error)
-                    },
-                })
-                setTimeout(() => {
-                    usingInterval(true)
-                }, intervalDuration)
-            })
-            if (usedInterval) {
-                let interval = setInterval(async () => {
-                    const inboxes = await this.inbox(number)
-                    cb(inboxes, {
-                        resolve(data) {
-                            clearInterval(interval)
-                            interval = null
-                            resolve(data)
-                        },
-                        reject(error) {
-                            clearInterval(interval)
-                            interval = null
-                            reject(error)
-                        }
-                    })
-                }, intervalDuration)
+            let interval
+            const callback = {
+                resolve(data) {
+                    clearInterval(interval)
+                    interval = null
+                    resolve(data)
+                },
+                reject(error) {
+                    clearInterval(interval)
+                    interval = null
+                    reject(error)
+                }
             }
+            const inboxes = await this.inbox(number)
+            cb(inboxes, callback)
+            interval = setInterval(async () => {
+                const inboxes = await this.inbox(number)
+                cb(inboxes, callback)
+            }, intervalDuration)
         })
     }
 }
