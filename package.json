@@ -1,0 +1,34 @@
+{
+  "name": "receive-smss-private-api",
+  "version": "1.0.0",
+  "description": "receive-smss.com Private API",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "npx babel src --out-dir lib",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dvwzj/receive-smss-private-api.git"
+  },
+  "author": "dvwzj <iguphai_@msn.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dvwzj/receive-smss-private-api/issues"
+  },
+  "homepage": "https://github.com/dvwzj/receive-smss-private-api#readme",
+  "dependencies": {
+    "country-code-lookup": "0.0.18",
+    "jquery": "^3.5.1",
+    "jsdom": "^16.4.0",
+    "lodash": "^4.17.20",
+    "req-fast-promise": "^1.0.11",
+    "sugar": "^2.0.6"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.12.10",
+    "@babel/core": "^7.12.10",
+    "@babel/preset-env": "^7.12.10",
+    "esm": "^3.2.25"
+  }
+}
